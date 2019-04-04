@@ -78,11 +78,10 @@
                 <button class="btn btn-default" style="margin-left: 20px" v-on:click="AddList">添加新样式</button>
               </div>
               <div style="padding: 5px">
-                <div v-for="(v,i) in tickets" style="float: left;margin-bottom: 5px">
+                <div v-for="(item,i) in tickets" style="float: left;margin-bottom: 5px">
                   <form class="form-inline">
                     <input class="form-control" v-model="tickets[i].name" placeholder="请输入名称">
-                    <!--<input class="form-control" v-model="tickets[i].times[ticketTimeIndex[i]].price" placeholder="请输入价格">-->
-                    <input class="form-control" v-model="tickets[i].price" placeholder="请输入价格">
+                    <input class="form-control" v-model="item.times[item.timeIndex].price" placeholder="请输入价格">
                     <button class="btn btn-default" @click="del(i)">删除</button>
                   </form>
                 </div>
@@ -96,8 +95,8 @@
                 <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>时间设置
               </div>
               <div class="form-group">
-                <div class="input-group date" id="datetimepicker">
-                  <input type="text" class="form-control" v-model="ticketTime"/>
+                <div class="input-group date" >
+                  <input type="text" class="form-control" v-model="ticketTime" id="dateTimePicker"/>
                   <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -169,6 +168,25 @@
           price: 0,
           balance: 0,
           scenicId: 0,
+          timeIndex: 0,
+          times:[
+            {
+              // balance:0,
+              // price:0,
+              // useTime:''
+            }
+          ]
+        }],
+        emptyTicket:{
+          id: 0,
+          createTime: "",
+          updateTime: "",
+          name: "",
+          imgUrl: "",
+          price: 0,
+          balance: 0,
+          scenicId: 0,
+          timeIndex: 0,
           times:[
             {
               balance:0,
@@ -176,36 +194,38 @@
               useTime:''
             }
           ]
-        }],
+        },
         ticketTime:"2019-04-04",
-        ticketTimeIndex: [],
-      }
-    },
-    computed: {
-      ticketTim() {
-        return this.ticketTime;
+        // ticketTimeIndex: [],
       }
     },
     watch:{
       ticketTime(val) {
-        // console.log(newTime)
-        // for(let tindex; tindex<this.tickets.length; tindex++){
-        //   this.ticketTimeIndex[tindex] = -1;
-        //   for (var index;index<this.tickets[tindex].times.length;index++){
-        //     if (newTime===this.tickets[tindex].times[index].useTime){
-        //       this.ticketTimeIndex[tindex]=index;
-        //     }
-        //   }
-        //   if(this.ticketTimeIndex[tindex] === -1){
-        //     this.tickets[tindex].times.push({
-        //       price: this.tickets[tindex].price,
-        //       balance:this.tickets[tindex].balance,
-        //       useTime:newTime
-        //     });
-        //     this.ticketTimeIndex[tindex] = this.tickets[tindex].times.length -1;
-        //     console.log(this.ticketTimeIndex[tindex])
-        //   }
-        // }
+        // console.log(this.tickets[0].times)
+        // console.log("0000")
+        for(let tindex = 0; tindex<this.tickets.length; tindex++){
+          this.tickets[tindex].timeIndex = -1;
+          // console.log("1111")
+          for (let index = 0; index<this.tickets[tindex].times.length; index++){
+            console.log(this.ticketTime);
+            console.log(this.tickets[tindex].times[index].useTime);
+            console.log(this.ticketTime===this.tickets[tindex].times[index].useTime)
+            if (this.ticketTime===this.tickets[tindex].times[index].useTime){
+              this.tickets[tindex].timeIndex=index;
+              console.log(this.tickets[tindex].timeIndex)
+            }
+          }
+          if(this.tickets[tindex].timeIndex === -1){
+            // console.log("3333")
+            this.tickets[tindex].times.push({
+              price: this.tickets[tindex].price,
+              balance:this.tickets[tindex].balance,
+              useTime:this.ticketTime
+            });
+            this.tickets[tindex].timeIndex = this.tickets[tindex].times.length -1;
+            // console.log(this.tickets[tindex].timeIndex)
+          }
+        }
       }
     },
     created () {
@@ -213,19 +233,31 @@
         return
       }
       this.scenic = this.$route.params.scenic
+      if (this.scenic.id !== 0) {
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic/'+this.scenic.id+'/ticket', this.tickets)
+          .then(response => {
+            this.tickets = response.data;
+            for(let i = 0;i<response.data.length;i++){
+              this.tickets[i].timeIndex = 0;
+            }
+          })
+      }
+
+      this.ticketTime="2019-04-04";
     },
     mounted () {
-      $('#datetimepicker').datetimepicker({
+      const dateTimePicker = $('#dateTimePicker')
+      const that = this
+      dateTimePicker.datetimepicker({
         minView: 'month',
         language: 'zh-CN',
         format: 'yyyy-mm-dd',
       })
-      if (this.scenic.id !== 0) {
-        this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic/'+this.scenic.id+'/ticket', this.tickets)
-          .then(response => {
-            this.tickets = response.data
-          })
-      }
+      dateTimePicker.datetimepicker()
+        .on('hide', function (ev) {
+          var value = dateTimePicker.val();
+          that.ticketTime = value;
+        });
     },
     methods: {
       adultConfig () {
@@ -235,21 +267,21 @@
         this.set = 'child'
       },
       update () {
-        console.log("1")
+        console.log(this.tickets)
         this.$axios.post(this.GLOBAL.BASE_URL+'/api/scenic/', this.scenic)
           .then(response => {
-            this.scenic = response.data
+             Object.assign(this.scenic,response.data);
           })
         this.$axios.post(this.GLOBAL.BASE_URL+'/api/scenic/'+this.scenic.id+'/ticket', this.tickets)
           .then(response => {
-            this.tickets = response.data
+            Object.assign(this.tickets,response.data);
           })
       },
       AddList () {
-        this.tickets.push({ name: '', price: ''})
+        this.tickets.push(this.emptyTicket)
       },
       del (i) {
-        this.rooms.splice(i, 1)
+        this.tickets.splice(i, 1)
       },
     }
   }

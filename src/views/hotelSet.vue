@@ -73,10 +73,10 @@
                 </div>
               </div>
             </div>
-            <div class="form-group file" style="float:left;margin-top: 30px;margin-left: 30px">
-              <label for="exampleInputFile">酒店图片上传</label>
-              <input type="file" id="exampleInputFile">
-              <!--<p class="help-block">Example block-level help text here.</p>-->
+            <div >
+
+              <input class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="updateImg"/>
+
             </div>
           </div>
 
@@ -163,49 +163,40 @@
         this.rooms.push({id: '', name: '', price: '', balance: ''})
       },
       del (i) {
-        this.rooms.splice(i, 1)
+        this.$axios.delete(this.GLOBAL.BASE_URL+'/api/hotel/' + this.infos.id + '/room/'+this.rooms[i].id)
+        this.rooms.splice(i,1);
       },
       update () {
-        console.log(this.infos.id)
+        console.log(this.rooms)
+        console.log(this.infos)
         this.$axios.post(this.GLOBAL.BASE_URL+'/api/hotel/', this.infos)
           .then(response => {
             this.infos = response.data
           })
-        console.log(this.infos.id)
+        this.$axios.post(this.GLOBAL.BASE_URL+'/api/hotel/' + this.infos.id + '/room/', this.rooms)
+          .then(response => {
+            this.rooms = response.data
+          })
+      },
+      updateImg(e){
+        let file = e.target.files[0];
+        let param = new FormData(); //创建form对象
+        param.append('img',file,file.name);//通过append向form对象添加数据
+        // param.append('chunk','0');//添加form表单中其他数据
+        console.log(param.get('file')); //FormData私有类对象，访问不到，可以通过get判断值是否传进去
+        let config = {
+          headers:{'Content-Type':'multipart/form-data'}
+        };  //添加请求头
+        this.$axios.post(this.GLOBAL.BASE_IMG_URL+'/hotel/'+this.infos.id,param,config)
+          .then(response=>{
+            console.log(response.data);
+          })
       }
     }
   }
 </script>
 
 <style scoped>
-  .file {
-    position: relative;
-    display: inline-block;
-    background: #D0EEFF;
-    border: 1px solid #99D3F5;
-    border-radius: 4px;
-    padding: 4px 12px;
-    overflow: hidden;
-    color: #1E88C7;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 20px;
-  }
-
-  .file input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
-  }
-
-  .file:hover {
-    background: #AADFFD;
-    border-color: #78C3F3;
-    color: #004974;
-    text-decoration: none;
-  }
 
   .btnS {
     width: 150px;
