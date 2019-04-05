@@ -60,23 +60,32 @@
             </div>
           </div>
 
-          <div>
-            <div style="float:left;width: 40%;">
+          <div style="float:left;width: 40%;">
+            <div >
               <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>备注
-                <textarea class="form-control" placeholder="Username" rows="4"
+                <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>简介
+                <textarea class="form-control" placeholder="简介" rows="4"
                           v-model="infos.briefIntroduce"></textarea>
-                <div class="input-group" style="margin-top: 20px">
-                  <span class="input-group-addon">X</span>
-                  <input type="text" class="form-control" placeholder="请输入酒店号码" aria-describedby="basic-addon1"
-                         v-model="infos.phone">
-                </div>
               </div>
             </div>
-            <div >
-
+          </div>
+          <div style="float:left;width: 40%;margin-left: 40px">
+            <div style="margin-bottom: 10px">
+              <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>添加酒店图片
+            </div>
+            <div>
               <input class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="updateImg"/>
+            </div>
 
+            <div style="margin-top: 20px">
+              <div style="margin-bottom: 10px">
+                <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>管理号码
+              </div>
+              <div class="input-group" >
+                <span class="input-group-addon">X</span>
+                <input type="text" class="form-control" placeholder="请输入酒店号码" aria-describedby="basic-addon1"
+                       v-model="infos.phone">
+              </div>
             </div>
           </div>
 
@@ -172,10 +181,10 @@
         this.$axios.post(this.GLOBAL.BASE_URL+'/api/hotel/', this.infos)
           .then(response => {
             this.infos = response.data
-          })
-        this.$axios.post(this.GLOBAL.BASE_URL+'/api/hotel/' + this.infos.id + '/room/', this.rooms)
-          .then(response => {
-            this.rooms = response.data
+            this.$axios.post(this.GLOBAL.BASE_URL+'/api/hotel/' + this.infos.id + '/room/', this.rooms)
+              .then(response => {
+                this.rooms = response.data
+              })
           })
       },
       updateImg(e){

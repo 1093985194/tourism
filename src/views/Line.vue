@@ -8,8 +8,8 @@
     </div>
     <br>
     <div class="panel-body" style="height: 100%">
-      <div class="found">
-        <input type="text" placeholder="输入关键字进行搜索" style="width: 400px;float: left;height: 34px" v-model="keywords" >
+      <div>
+        <input type="text" placeholder="输入关键字进行搜索" style="width: 400px;float: left;height: 34px" v-model="keywords" v-on:input="search">
       </div>
       <br>
       <br>
@@ -27,14 +27,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in search(keywords).slice(x,y)">
-            <td>{{item.name}}</td>
-            <td>{{item.ticketdate}}</td>
+          <!--<tr v-for="(item,index) in search(keywords).slice(x,y)">-->
+          <tr v-for="(item,index) in line">
+          <td>{{item.name}}</td>
+            <td>{{item.tripItems[0].useTime|dateFormat()}}</td>
             <td>{{item.ticketstyle}}</td>
             <td>{{item.ticketprice}}</td>
             <td>{{item.ticketleave}}</td>
             <td>
-              <a v-on:click="getIndex(index)"><router-link to="lineSet">修改</router-link></a>/<a href="#" v-on:click="deleteInfo(index)">删除</a>
+              <router-link to="lineSet"><a v-on:click="getIndex(line[index])">修改</a></router-link>/<a href="#" v-on:click="deleteInfo(index)">删除</a>
             </td>
           </tr>
           </tbody>
@@ -65,17 +66,18 @@
         x:'0',
         y:'10',
         dataIndex:'',
-        line:[]
+        line:null
       }
     },
     mounted () {
-      this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic')
+      this.$axios.get(this.GLOBAL.BASE_URL+'/api/trip')
         .then(response => {
           this.line = response.data;
         })
     },
     methods:{
       deleteInfo(index){
+        // this.$axios.delete(this.GLOBAL.BASE_URL+'/api/trip/'+this.line[index].id)
         this.list.splice(index,1)
       },
       shang(){
@@ -89,21 +91,35 @@
         if (this.page*10<this.num) {
           this.page++;;
           this.x=(this.page-1)*10;
-          this.y=this.page*10;}
+          this.y=this.page*10;
+        }
+        search()
       },
-      getIndex(index){
-        this.dataIndex=index;
-      },
-      search(keywords) {
-        this.num='0'
-        return this.line.filter(item => {
-          if (item.name.includes(keywords)) {
-            if (item.name!=null) {
-              this.num++
-            }
-            return item
+      getIndex(line){
+        console.log(this.line)
+        this.$router.push({
+          name:'lineset',
+          params:{
+            line : line
           }
         })
+      },
+      search() {
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/trip', {
+          params:{
+            fuzzyKey: this.keywords,
+            page: this.page
+          }
+        }).then(response => this.line = response.data)
+        // this.num='0'
+        // return this.line.filter(item => {
+        //   if (item.name.includes(keywords)) {
+        //     if (item.name!=null) {
+        //       this.num++
+        //     }
+        //     return item
+        //   }
+        // })
       }
     },
     filters:{
@@ -126,5 +142,8 @@
   .list{
     width: fit-content;
     /*height: 500px;*/
+  }
+  .table{
+    margin-bottom: 0px;
   }
 </style>

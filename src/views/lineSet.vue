@@ -13,82 +13,77 @@
         <div style="margin-bottom: 20px">
           <span class="glyphicon glyphicon-cog" style="padding-right: 10px"></span>旅游设置
         </div>
-        <div class="panel-body">
 
-          <div style="margin-bottom: 20px;float: left">
-            <div style="float:left;width: 40%;margin-right: 40px">
-              <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>名称设置
+        <div class="row">
+          <div style="float: left;" class="col-md-6">
+              <div class="table-bordered" style="background-color: white">
+                <table class="table table-hover table-striped" width='100%' border='0' cellspacing='0' cellpadding='0' style='table-layout: fixed'>
+                  <thead>
+                    <tr >
+                      <th align="left">名称</th>
+                      <th align="left">日程</th>
+                      <th align="left">价格</th>
+                      <th align="left">余票</th>
+                      <th align="left">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item,index) in lines.tripItems">
+                      <td>{{item.business.id}}</td>
+                      <td>{{item.business.name}}</td>
+                      <td>{{item.business.address}}</td>
+                      <td>{{item.business.phone}}</td>
+                      <td><a @click="del(index)">删除</a></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="input-group">
-                <span class="input-group-addon">XXX</span>
-                <input type="text" class="form-control" placeholder="请输入产品名称" aria-describedby="basic-addon1">
-              </div>
-            </div>
-
-            <div style="float: left;width: 40%">
-              <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-time" style="padding-right: 10px"></span>时间设置
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon">YYYY-MM-dd - YYYY-MM-dd</span>
-                <input type="text" class="form-control" placeholder="请输入订单时间间隔" aria-describedby="basic-addon1">
-              </div>
-            </div>
           </div>
 
-          <div style="float: left">
-            <div style="margin-bottom: 20px;float: left;width: 40%">
-              <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-time" style="padding-right: 10px"></span>票种设置
-              </div>
-              <div>
-                <div class="btn-group " role="group" style="margin-left: 50px">
-                  <button type="button" class="btn btn-default btnS" v-on:click="adultConfig"
-                          v-bind:class="{active:set=='adult'}">成人票
+
+          <div class="col-md-6" style="float: left">
+
+
+            <div>
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{type}}</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 34px">
+                    <span class="caret"></span>
                   </button>
-                  <button type="button" class="btn btn-default btnS" v-on:click="childConfig"
-                          v-bind:class="{active:set=='child'}">儿童票
-                  </button>
+                  <ul class="dropdown-menu">
+                    <li @click="jingdian"><a href="#">景点</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li @click="jiudian"><a href="#">酒店</a></li>
+                  </ul>
                 </div>
+                <input type="text" class="form-control" v-model="key" placeholder="搜索">
               </div>
             </div>
-
-            <div style="float:left;width: 40%;">
-              <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-yen" style="padding-right: 10px"></span>价格设置
+            <br>
+            <div style="float: left;" v-if="this.resList.length!==0">
+              <div class="table-bordered" style="background-color: white">
+                <table class="table table-hover table-striped" width='100%' border='0' cellspacing='0' cellpadding='0' style='table-layout: fixed'>
+                  <thead>
+                  <tr>
+                    <th align="left">类型</th>
+                    <th align="left">名称</th>
+                    <th align="left">价格</th>
+                    <th align="left">余票</th>
+                    <th align="left">操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item,index) in resList">
+                      <th>{{item.type}}</th>
+                      <th>{{item.name}}</th>
+                      <th>{{item.moneyMin}}</th>
+                      <th>{{item.lever}}</th>
+                      <th><a  data-toggle="modal" data-target="#myModal">添加</a></th>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="input-group" style="float: left ;width: 40%;margin-right: 20px">
-                <span class="input-group-addon">成人</span>
-                <input type="text" class="form-control" placeholder="请输入价格" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group" style="width: 40%">
-                <span class="input-group-addon">儿童</span>
-                <input type="text" class="form-control" placeholder="请输入价格" aria-describedby="basic-addon1">
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div style="float:left;width: 40%;margin-right: 20px">
-              <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>库存设置
-              </div>
-              <div class="input-group igS">
-                <span class="input-group-addon">成人</span>
-                <input type="text" class="form-control" placeholder="请输入成人票总量" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group igS">
-                <span class="input-group-addon">儿童</span>
-                <input type="text" class="form-control" placeholder="请输入儿童票总量" aria-describedby="basic-addon1">
-              </div>
-            </div>
-
-            <div style="float:left;width: 40%;">
-              <div style="margin-bottom: 10px">
-                <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>备注
-              </div>
-              <textarea class="form-control" placeholder="Username" rows="5"></textarea>
             </div>
           </div>
 
@@ -121,98 +116,128 @@
       </div>
     </div>
     <div style="text-align:center">
-      <button class="btn btn-default btn-success" style="">确认</button>
+      <button class="btn btn-default btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">确认<span class="caret"></span></button>
     </div>
+
+
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
   </div>
 </template>
 
 <script>
   export default {
-    name: 'onedaySet',
+    name: 'lineSet',
     data () {
-      return {
-        type: 'place',
-        set: 'adult',
-        local: 'one',
-        // list: [
-        //   {id: '', name: '', price: '', balance: ''}
-        // ]
-        lines:''
+      return{
+        key:'',
+        type:'酒店',
+        lines:{
+          id: 0,
+          name: '',
+          tripItems: [
+            {
+              id: 0,
+              tripId: 0,
+              businessType: '',
+              businessId: 0,
+              dealId: 0,
+              useTime: '',
+              recommendCause:'' ,
+              business: {
+                id: 0,
+                type: '',
+                name: null,
+                briefIntroduce: null,
+                phone: null,
+                imgUrl: null,
+                address: null,
+                score: null,
+                close: false
+              }
+            }
+        ]
+        },
+        resList:[],
       }
-    },created () {
+    },
+    created () {
       if (this.$route.params.line === undefined) {
         return
       }
-      this.lines = this.$route.params.line
+      this.lines= this.$route.params.line;
+      for(let i = 0;i<this.lines.tripItems.length;i++){
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/'+this.lines.tripItems[i].businessType+"/"+this.lines.tripItems[i].businessId)
+          .then(response => this.$set(this.lines.tripItems[i],"business",response.data));
+      }
     },
-    mounted () {
-      this.hotelConfig()
-      this.goodsConfig()
-      this.carConfig()
-      this.placeConfig()
+    mounted(){
+      this.search()
     },
     methods: {
-      placeConfig () {
-        this.type = 'place'
+      jiudian(){
+        this.type = '酒店';
       },
-      hotelConfig () {
-        this.type = 'hotel'
+      jingdian(){
+        this.type = '景点';
       },
-      goodsConfig () {
-        this.type = 'goods'
+      search(){
+        if(this.type === "景点"){
+          this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic', {
+            params:{
+              fuzzyKey: this.key
+            }
+          }).then(response => this.resList = response.data)
+        }else if (this.type === "酒店"){
+          this.$axios.get(this.GLOBAL.BASE_URL+'/api/hotel', {
+            params:{
+              fuzzyKey: this.key
+            }
+          }).then(response => this.resList = response.data)
+        }
       },
-      carConfig () {
-        this.type = 'car'
+      del(index){
+        // this.$axios.delete(this.GLOBAL.BASE_URL+'/api/hotel/' + this.infos.id + '/room/'+this.rooms[i].id)
+        this.lines.tripItems.splice(index,1);
+      }
+    },
+    watch:{
+      type(val) {
+        this.search()
       },
-      adultConfig () {
-        this.set = 'adult'
-      },
-      childConfig () {
-        this.set = 'child'
-      },
-      AddList () {
-        this.list.push({id: '', name: '', price: '', balance: ''})
+      key(val){
+        this.search()
       }
     }
   }
 </script>
 
 <style scoped>
-  .file {
-    position: relative;
-    display: inline-block;
-    background: #D0EEFF;
-    border: 1px solid #99D3F5;
-    border-radius: 4px;
-    padding: 4px 12px;
-    overflow: hidden;
-    color: #1E88C7;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 20px;
-  }
-
-  .file input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
-  }
-
-  .file:hover {
-    background: #AADFFD;
-    border-color: #78C3F3;
-    color: #004974;
-    text-decoration: none;
-  }
-
-  .btnS {
-    width: 150px;
-    margin-right: 10px;
-  }
-
-  .igS {
-    margin-bottom: 10px;
+  .table{
+    margin-bottom: 0px;
   }
 </style>

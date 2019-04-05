@@ -87,6 +87,7 @@ export default new VueRouter({
         },
         {
           path:'/lineset',
+          name:'lineset',
           component: lineSet,
         },
         {
