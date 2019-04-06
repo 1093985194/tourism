@@ -41,6 +41,13 @@
                 </li>
               </router-link>
 
+              <router-link to="Restaurant" style="color: gray;text-decoration:none">
+                <li class="list-group-item left-nav-item">
+                  <span class="glyphicon glyphicon-shopping-cart"
+                        style="padding-right: 20px"></span>餐饮
+                </li>
+              </router-link>
+
               <router-link to="group" style="color: gray;text-decoration:none">
                 <li class="list-group-item left-nav-item">
                   <span class="glyphicon glyphicon-shopping-cart"

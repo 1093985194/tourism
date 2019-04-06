@@ -21,13 +21,14 @@
               <th align="left" style="width: 300px">景点名称</th>
               <th align="left">日程</th>
               <th align="left">票种</th>
-              <th align="left">价格</th>
+              <th align="left">地点s</th>
               <th align="left">余票</th>
               <th align="left">操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(item,index) in search(keywords).slice(x,y)">
+            <!--<tr v-for="(item,index) in search(keywords).slice(x,y)">-->
+            <tr v-for="(item,index) in scenic">
               <td>{{item.name}}</td>
               <td>{{item.startTime }}</td>
               <td>{{item.phone}}</td>
@@ -100,20 +101,14 @@
           }
         })
       },
-      search(keywords) {
-        this.num='0'
-        return this.scenic.filter(item => {
-          if (item.name.includes(keywords)) {
-            if (item.name!=null) {
-              this.num++
-            }
-        var arr = [];
-        for (var i=0;i<this.scenic.length;i++){
-          arr.push(this.scenic[i]);
-        }
-        return arr;
+      search() {
+        this.num='0';
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic', {
+          params:{
+            fuzzyKey: this.keywords,
+            page: this.page
           }
-        })
+        }).then(response => this.scenic = response.data)
       },
     },
     filters:{
@@ -128,6 +123,12 @@
         return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
       }
     },
+    watch:{
+      keywords(key){
+        this.search()
+      }
+    }
+
   }
 </script>
 

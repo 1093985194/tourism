@@ -19,6 +19,8 @@ import lineSet from '@/views/lineSet'
 import groupSet from '@/views/groupSet'
 import goodSet from '@/views/goodSet'
 import carSet from '@/views/carSet'
+import Restaurant from '@/views/Restaurant'
+import restaurantSet from '@/views/restaurantSet'
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -74,6 +76,15 @@ export default new VueRouter({
         {
           path:'/goods',
           component: Goods,
+        },
+        {
+          path:'/restaurant',
+          component:Restaurant
+        },
+        {
+          path:'/restaurantset',
+          name:'restaurantset',
+          component:restaurantSet
         },
         {
           path:'/ticketset',

@@ -9,7 +9,7 @@
     <br>
     <div class="panel-body" style="height: 100%">
       <div>
-        <input type="text" placeholder="输入关键字进行搜索" style="width: 400px;float: left;height: 34px" v-model="keywords" v-on:input="search">
+        <input type="text" placeholder="输入关键字进行搜索" style="width: 400px;float: left;height: 34px" v-model="keywords">
       </div>
       <br>
       <br>
@@ -28,7 +28,7 @@
           </thead>
           <tbody>
           <!--<tr v-for="(item,index) in search(keywords).slice(x,y)">-->
-          <tr v-for="(item,index) in line">
+          <tr v-if="line.length!==0" v-for="(item,index) in line">
           <td>{{item.name}}</td>
             <td>{{item.tripItems[0].useTime|dateFormat()}}</td>
             <td>{{item.ticketstyle}}</td>
@@ -69,7 +69,7 @@
         line:null
       }
     },
-    mounted () {
+    created () {
       this.$axios.get(this.GLOBAL.BASE_URL+'/api/trip')
         .then(response => {
           this.line = response.data;
@@ -77,8 +77,8 @@
     },
     methods:{
       deleteInfo(index){
-        // this.$axios.delete(this.GLOBAL.BASE_URL+'/api/trip/'+this.line[index].id)
-        this.list.splice(index,1)
+        this.$axios.delete(this.GLOBAL.BASE_URL+'/api/trip/'+this.line[index].id)
+        this.line.splice(index,1)
       },
       shang(){
         if (this.page!=1){
@@ -89,7 +89,7 @@
       },
       xia(){
         if (this.page*10<this.num) {
-          this.page++;;
+          this.page++;
           this.x=(this.page-1)*10;
           this.y=this.page*10;
         }
@@ -111,15 +111,6 @@
             page: this.page
           }
         }).then(response => this.line = response.data)
-        // this.num='0'
-        // return this.line.filter(item => {
-        //   if (item.name.includes(keywords)) {
-        //     if (item.name!=null) {
-        //       this.num++
-        //     }
-        //     return item
-        //   }
-        // })
       }
     },
     filters:{
@@ -135,6 +126,11 @@
         return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
       }
     },
+    watch:{
+      keywords(key){
+        this.search()
+      }
+    }
   }
 </script>
 

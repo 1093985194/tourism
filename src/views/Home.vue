@@ -1,14 +1,14 @@
 <template>
   <div class="container-fluid home">
     <div class="col-md-12" style="background-color: white;margin-bottom: 20px">
-      <h4 style="padding-bottom: 30px">一周订单统计</h4>
-      <div id="myChart" :style="{width: '1200px', height: '300px',paddingTop:'20px'}"></div>
+      <!--<h4 style="padding-bottom: 30px">一周订单统计</h4>-->
+      <div id="myChart" :style="{width: '1000px', height: '400px',paddingTop:'50px',paddingLeft: '50px'}"></div>
     </div>
     <div class="col-md-12" style="padding: 0px">
       <div class="col-md-3">
         <div class="panel panel-default" style="height: 200px;">
           <div style="padding-top: 60px;padding-left: 30px">
-            <div class="text-primary" style="font-size: 40px;float: left;">1200</div>
+            <div class="text-primary" style="font-size: 40px;float: left;">1320</div>
             <span class="glyphicon glyphicon-list-alt" style="font-size: 50px;padding-left:60px;color: red"></span>
           </div>
           <!--<br>-->
@@ -51,43 +51,82 @@
         let myChart = this.$echarts.init(document.getElementById('myChart'))
         // 绘制图表
         myChart.setOption({
-          title: {},
-          tooltip: {},
+          title: {
+            text: '堆叠区域图'
+          },
+          tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+            }
+          },
+          legend: {
+            data:['景点门票','酒店','路线','餐饮','总订单']
+          },
           grid: {
             left: '3%',
             right: '4%',
             bottom: '3%',
             containLabel: true
           },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line',
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'blue' // 0% 处的颜色
-                }, {
-                  offset: 1, color: 'red' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              }
+          xAxis : [
+            {
+              type : 'category',
+              boundaryGap : false,
+              data : ['周一','周二','周三','周四','周五','周六','周日'],
+            }
+          ],
+          yAxis : [
+            {
+              type : 'value',
+              // axisLine:false,
+              splitLine:{
+                show:false
+              },
+            }
+          ],
+          series : [
+            {
+              name:'景点门票',
+              type:'line',
+              smooth:true,
+              areaStyle: {},
+              data:[120, 132, 101, 134, 90, 230, 210]
             },
-            smooth: true
-
-          }]
+            {
+              name:'酒店',
+              type:'line',
+              smooth:true,
+              areaStyle: {},
+              data:[220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+              name:'路线',
+              type:'line',
+              smooth:true,
+              areaStyle: {},
+              data:[150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+              name:'餐饮',
+              type:'line',
+              smooth:true,
+              areaStyle: {normal: {}},
+              data:[320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+              name:'总订单',
+              type:'line',
+              smooth:true,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              areaStyle: {normal: {}},
+              data:[820, 932, 901, 934, 1290, 1330, 1320]
+            },
+          ]
         })
       },
       fav () {

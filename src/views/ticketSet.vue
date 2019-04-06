@@ -43,7 +43,7 @@
               <div >
                 <table width='100%' style='table-layout: fixed'>
                   <thead style="padding-bottom: 20px">
-                    <tr >
+                    <tr v-if="tickets.length!=0">
                       <td style="padding: 5px">名称</td>
                       <td style="padding-left: 10px">价格</td>
                       <td style="padding-left: 20px">操作</td>
@@ -124,7 +124,7 @@
               <div style="padding: 5px">
                 <table width='100%' style='table-layout: fixed'>
                   <thead style="padding-bottom: 20px">
-                  <tr >
+                  <tr v-if="tickets.length!=0">
                     <td style="padding: 5px">名称</td>
                     <td style="padding-left: 10px">价格</td>
                     <td style="padding-left: 20px">操作</td>
@@ -224,9 +224,9 @@
           timeIndex: 0,
           times:[
             {
-              // balance:0,
-              // price:0,
-              // useTime:''
+              balance:0,
+              price:0,
+              useTime:''
             }
           ]
         }],
@@ -287,7 +287,7 @@
       }
       this.scenic = this.$route.params.scenic
       if (this.scenic.id !== 0) {
-        this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic/'+this.scenic.id+'/ticket', this.tickets)
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/scenic/'+this.scenic.id+'/ticket')
           .then(response => {
             this.tickets = response.data;
             for(let i = 0;i<response.data.length;i++){
@@ -331,11 +331,27 @@
           })
       },
       AddList () {
+        console.log(JSON.stringify(this.tickets))
         this.tickets.push({
+          id: 0,
+          createTime: "",
+          updateTime: "",
+          name: "",
+          imgUrl: "",
           price: 0,
-          balance:0,
-          useTime:this.ticketTime
+          balance: 0,
+          scenicId: 0,
+          timeIndex: 0,
+          times:[
+            {
+              balance:0,
+              price:0,
+              useTime:''
+            }
+          ]
         })
+        console.log("fasd")
+        console.log(this.tickets)
       },
       del (i) {
         this.$axios.delete(this.GLOBAL.BASE_URL+'/api/scenic/'+this.scenic.id+'/ticket/'+this.tickets[i].id).then(res =>console.log(res.data))

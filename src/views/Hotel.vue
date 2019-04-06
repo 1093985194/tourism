@@ -30,7 +30,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in search(keywords).slice(x,y)">
+          <!--<tr v-for="(item,index) in search(keywords).slice(x,y)">-->
+          <tr v-for="(item,index) in info">
             <td>{{item.name}}</td>
             <td>{{item.brand}}</td>
             <td>{{item.lever}}</td>
@@ -105,19 +106,22 @@
             }
           })
       },
-      search(keywords) {
+      search() {
         this.num='0';
-        return this.info.filter(item => {
-          if (item.name.includes(keywords)) {
-            if (item.name!=null) {
-              this.num++
-            }
-            return item
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/hotel', {
+          params:{
+            fuzzyKey: this.keywords,
+            page: this.page
           }
-        })
+        }).then(response => this.info = response.data)
       }
     },
-    }
+    watch: {
+      keywords (key) {
+        this.search()
+      }
+  }
+}
 </script>
 
 <style>
