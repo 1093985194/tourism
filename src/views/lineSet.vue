@@ -54,7 +54,7 @@
               <table class="table table-hover table-striped" width='100%' border='0' cellspacing='0' cellpadding='0'
                      style='table-layout: fixed'>
                 <thead>
-                <tr>
+                <tr v-if="lines.tripItems.length!=0">
                   <th align="left">名称</th>
                   <th align="left">日程</th>
                   <th align="left">地址</th>
@@ -63,7 +63,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-if="lines.tripItems.length!=0" v-for="(item,index) in lines.tripItems">
+                <tr  v-for="(item,index) in lines.tripItems">
                   <td>{{item.business.name}}</td>
                   <td>{{item.useTime}}</td>
                   <td>{{item.business.address}}</td>

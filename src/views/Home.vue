@@ -2,13 +2,13 @@
   <div class="container-fluid home">
     <div class="col-md-12" style="background-color: white;margin-bottom: 20px">
       <!--<h4 style="padding-bottom: 30px">一周订单统计</h4>-->
-      <div id="myChart" :style="{width: '1000px', height: '400px',paddingTop:'50px',paddingLeft: '50px'}"></div>
+      <div id="myChart" :style="{width: '1100px', height: '400px',paddingTop:'50px',paddingLeft: '50px'}"></div>
     </div>
     <div class="col-md-12" style="padding: 0px">
       <div class="col-md-3">
         <div class="panel panel-default" style="height: 200px;">
           <div style="padding-top: 60px;padding-left: 30px">
-            <div class="text-primary" style="font-size: 40px;float: left;">1320</div>
+            <div class="text-primary" style="font-size: 40px;float: left;">820</div>
             <span class="glyphicon glyphicon-list-alt" style="font-size: 50px;padding-left:60px;color: red"></span>
           </div>
           <!--<br>-->
@@ -19,7 +19,7 @@
       <div class="col-md-6">
         <div class="panel panel-default" style="height: 200px;">
           <div class="listfont">用户喜爱景点前三</div>
-          <div id="like" :style="{width: '550px', height: '200px',paddingTop:'20px'}"></div>
+          <div id="like" :style="{width: '540px', height: '200px',paddingLeft:'40px'}"></div>
         </div>
 
       </div>
@@ -52,7 +52,7 @@
         // 绘制图表
         myChart.setOption({
           title: {
-            text: '堆叠区域图'
+            text: '一周订单汇总 '
           },
           tooltip : {
             trigger: 'axis',
@@ -65,7 +65,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '10%',
             containLabel: true
           },
           xAxis : [
@@ -78,7 +78,6 @@
           yAxis : [
             {
               type : 'value',
-              // axisLine:false,
               splitLine:{
                 show:false
               },
@@ -89,28 +88,24 @@
               name:'景点门票',
               type:'line',
               smooth:true,
-              areaStyle: {},
               data:[120, 132, 101, 134, 90, 230, 210]
             },
             {
               name:'酒店',
               type:'line',
               smooth:true,
-              areaStyle: {},
               data:[220, 182, 191, 234, 290, 330, 310]
             },
             {
               name:'路线',
               type:'line',
               smooth:true,
-              areaStyle: {},
               data:[150, 232, 201, 154, 190, 330, 410]
             },
             {
               name:'餐饮',
               type:'line',
               smooth:true,
-              areaStyle: {normal: {}},
               data:[320, 332, 301, 334, 390, 330, 320]
             },
             {
@@ -123,8 +118,7 @@
                   position: 'top'
                 }
               },
-              areaStyle: {normal: {}},
-              data:[820, 932, 901, 934, 1290, 1330, 1320]
+              data:[820, 832, 801, 834, 890, 830, 820]
             },
           ]
         })
@@ -132,44 +126,49 @@
       fav () {
         let favorite = this.$echarts.init(document.getElementById('like'))
         favorite.setOption({
-          title: {},
+          legend: {},
           tooltip: {},
-          grid: {
-            top: '10px',
-            left: '50px',
-            right: '15px',
-            bottom: '50px'
+          dataset: {
+            source: [
+              ['product', ''],
+              ['西溪国家湿地公园-周村',29034],
+              ['杭州烂苹果乐园', 23489],
+              ['西湖', 18203],
+            ]
           },
-          xAxis: {
+          xAxis:{
             type: 'value',
-          },
-          yAxis: {
-            type: 'category',
-            data: ['北京', '杭州', '丽水']
-          },
-          series: [
-            {
-              type: 'bar',
-              data: [18203, 23489, 29034]
+            gridIndex: 0,
+            splitLine:{
+              show:false
             }
+          },
+          yAxis:{
+            type: 'category',
+            gridIndex: 0
+          },
+          grid: [
+            {bottom: '25%'},
+            {top: '55%'}
+          ],
+          series: [
+            {type: 'bar', seriesLayoutBy: 'row'},
+            {type: 'bar', seriesLayoutBy: 'row'},
+            {type: 'bar', seriesLayoutBy: 'row'},
           ]
         })
       },
       dis () {
         let dis = this.$echarts.init(document.getElementById('distribution'))
         dis.setOption({
-
           title: {},
-
           tooltip: {},
-
           grid: {
-            top: '0px',
-            left: '50px',
-            right: '15px',
-            bottom: '0px'
+            left: '30%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
           },
-
           visualMap: {
             show: false,
             min: 100,
@@ -215,7 +214,6 @@
                   color: 'red',
                 }
               },
-
               animationType: 'scale',
               animationEasing: 'elasticOut',
               animationDelay: function (idx) {

@@ -30,7 +30,8 @@
           <!--<tr v-for="(item,index) in search(keywords).slice(x,y)">-->
           <tr v-if="line.length!==0" v-for="(item,index) in line">
           <td>{{item.name}}</td>
-            <td>{{item.tripItems[0].useTime|dateFormat()}}</td>
+            <td v-if="item.tripItems[0]">{{item.tripItems[0].useTime}}</td>
+            <td v-else>未定</td>
             <td>{{item.ticketstyle}}</td>
             <td>{{item.ticketprice}}</td>
             <td>{{item.ticketleave}}</td>
@@ -46,9 +47,8 @@
       <nav aria-label="...">
         <ul class="pager">
           <li class="previous" v-on:click="shang" v-if="page!=1"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
-          <li class="previous disabled" v-on:click="shang" v-if="page==1"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
-          <li class="next" v-on:click="xia"  v-if="page*10<num"><a href="#">下一页<span aria-hidden="true">&rarr;</span></a></li>
-          <li class="next disabled" v-on:click="xia"  v-if="page*10>=num"><a href="#">下一页<span aria-hidden="true">&rarr;</span></a></li>
+          <li class="previous disabled" v-if="page==1"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+          <li class="next" v-on:click="xia"><a href="#">下一页<span aria-hidden="true">&rarr;</span></a></li>
         </ul>
       </nav>
 
@@ -81,19 +81,34 @@
         this.line.splice(index,1)
       },
       shang(){
-        if (this.page!=1){
-          this.page--;
-          this.x=(this.page-1)*10;
-          this.y=this.page*10;
-        }
+        this.page--;
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/trip',{
+          params:{
+            page: this.page
+          }
+        })
+          .then(response => {
+            if (!(Array.isArray(response.data))||response.data==null||response.data.length===0){
+              this.page++;
+              return;
+            }
+            this.line = response.data;
+          })
       },
       xia(){
-        if (this.page*10<this.num) {
-          this.page++;
-          this.x=(this.page-1)*10;
-          this.y=this.page*10;
-        }
-        search()
+        this.page++;
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/trip',{
+          params:{
+            page: this.page
+          }
+        })
+          .then(response => {
+            if (!(Array.isArray(response.data))||response.data==null||response.data.length===0){
+              this.page--;
+              return;
+            }
+            this.line = response.data;
+          })
       },
       getIndex(line){
         console.log(this.line)
@@ -137,7 +152,6 @@
 <style>
   .list{
     width: fit-content;
-    /*height: 500px;*/
   }
   .table{
     margin-bottom: 0px;
