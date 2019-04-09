@@ -25,11 +25,11 @@
                   <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>名称设置
                 </div>
                 <div class="input-group" style="float:left;margin-right: 40px">
-                  <span class="input-group-addon">XXX</span>
+                  <span class="input-group-addon">名称</span>
                   <input type="text" class="form-control" placeholder="请输入产品名称" aria-describedby="basic-addon1" v-model="scenic.name">
                 </div>
                 <div class="input-group" style="float:left;margin-right: 40px;margin-top: 10px">
-                  <span class="input-group-addon">XXX</span>
+                  <span class="input-group-addon">地址</span>
                   <input type="text" class="form-control" placeholder="请输入地址" aria-describedby="basic-addon1" v-model="scenic.address">
                 </div>
               </div>
@@ -40,24 +40,40 @@
                 <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>票种设置
                 <button class="btn btn-default" style="margin-left: 20px" v-on:click="AddList">添加新票种</button>
               </div>
-              <div >
-                <table width='100%' style='table-layout: fixed'>
-                  <thead style="padding-bottom: 20px">
-                    <tr v-if="tickets.length!=0">
-                      <td style="padding: 5px">名称</td>
-                      <td style="padding-left: 10px">价格</td>
-                      <td style="padding-left: 20px">操作</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="form-inline" v-for="(v,i) in tickets" style="float: left;margin-bottom: 5px">
-                      <td><input class="form-control" v-model="tickets[i].name" placeholder="请输入名称"></td>
-                      <td><input class="form-control" v-model="tickets[i].price" placeholder="请输入价格"></td>
-                      <td><button class="btn btn-default" @click="del(i)">删除</button></td>
-                  </tr>
-                  </tbody>
-                </table>
+              <!--<div >-->
+                <!--<table width='100%' style='table-layout: fixed'>-->
+                  <!--<thead style="padding-bottom: 20px">-->
+                    <!--<tr v-if="tickets.length!=0">-->
+                      <!--<td style="padding: 5px">名称</td>-->
+                      <!--<td style="padding-left: 10px">价格</td>-->
+                      <!--<td style="padding-left: 20px">操作</td>-->
+                    <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody>-->
+                  <!--<tr class="form-inline" v-for="(v,i) in tickets" style="float: left;margin-bottom: 5px">-->
+                      <!--<td><input class="form-control" v-model="tickets[i].name" placeholder="请输入名称"></td>-->
+                      <!--<td><input class="form-control" v-model="tickets[i].price" placeholder="请输入价格"></td>-->
+                      <!--<td><button class="btn btn-default" @click="del(i)">删除</button></td>-->
+                  <!--</tr>-->
+                  <!--</tbody>-->
+                <!--</table>-->
+              <!--</div>-->
+              <div style="padding: 5px">
+                <tr>
+                  <td style="padding: 5px">名称</td>
+                  <td style="padding-left: 170px">价格</td>
+                  <td style="padding-left: 170px">操作</td>
+                </tr>
+                <div v-for="(v,i) in tickets" style="float: left;margin-bottom: 5px">
+                  <form class="form-inline">
+                    <input class="form-control" v-model="tickets[i].name" placeholder="请输入套房名称">
+                    <input class="form-control" v-model="tickets[i].price" placeholder="请输入价格">
+                    <button class="btn btn-default" @click="del(i)">删除</button>
+                    <br>
+                  </form>
+                </div>
               </div>
+
             </div>
           </div>
           <div style="float:left;width: 40%;">
@@ -98,7 +114,7 @@
                 <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>管理号码
               </div>
               <div class="input-group" style="margin-top: 20px">
-                <span class="input-group-addon">X</span>
+                <span class="input-group-addon">号码</span>
                 <input type="text" class="form-control" placeholder="请输入酒店号码" aria-describedby="basic-addon1"
                        v-model="scenic.phone">
               </div>
@@ -121,23 +137,38 @@
                 <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>票种设置
                 <button class="btn btn-default" style="margin-left: 20px" v-on:click="AddList">添加新票种</button>
               </div>
+              <!--<div style="padding: 5px">-->
+                <!--<table width='100%' style='table-layout: fixed'>-->
+                  <!--<thead style="padding-bottom: 20px">-->
+                  <!--<tr v-if="tickets.length!=0">-->
+                    <!--<td style="padding: 5px">名称</td>-->
+                    <!--<td style="padding-left: 10px">价格</td>-->
+                    <!--<td style="padding-left: 20px">操作</td>-->
+                  <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody>-->
+                  <!--<tr class="form-inline" v-for="(item,i) in tickets" style="float: left;margin-bottom: 5px">-->
+                    <!--<td><input class="form-control" v-model="tickets[i].name" placeholder="请输入名称"></td>-->
+                    <!--<td><input class="form-control" v-model="item.times[item.timeIndex].price" placeholder="请输入价格"></td>-->
+                    <!--<td><button class="btn btn-default" @click="del(i)">删除</button></td>-->
+                  <!--</tr>-->
+                  <!--</tbody>-->
+                <!--</table>-->
+              <!--</div>-->
               <div style="padding: 5px">
-                <table width='100%' style='table-layout: fixed'>
-                  <thead style="padding-bottom: 20px">
-                  <tr v-if="tickets.length!=0">
-                    <td style="padding: 5px">名称</td>
-                    <td style="padding-left: 10px">价格</td>
-                    <td style="padding-left: 20px">操作</td>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="form-inline" v-for="(item,i) in tickets" style="float: left;margin-bottom: 5px">
-                    <td><input class="form-control" v-model="tickets[i].name" placeholder="请输入名称"></td>
-                    <td><input class="form-control" v-model="item.times[item.timeIndex].price" placeholder="请输入价格"></td>
-                    <td><button class="btn btn-default" @click="del(i)">删除</button></td>
-                  </tr>
-                  </tbody>
-                </table>
+                <tr>
+                  <td style="padding: 5px">名称</td>
+                  <td style="padding-left: 170px">价格</td>
+                  <td style="padding-left: 170px">操作</td>
+                </tr>
+                <div v-for="(item,i) in tickets" style="float: left;margin-bottom: 5px">
+                  <form class="form-inline">
+                    <input class="form-control" v-model="tickets[i].name" placeholder="请输入名称">
+                    <input class="form-control" v-model="item.times[item.timeIndex].price" placeholder="请输入价格">
+                    <button class="btn btn-default" @click="del(i)">删除</button>
+                    <br>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -174,7 +205,7 @@
                 <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>人员设置
               </div>
               <div class="input-group">
-                <span class="input-group-addon">X</span>
+                <span class="input-group-addon">工号</span>
                 <input type="text" class="form-control" placeholder="请输入核销人员工号" aria-describedby="basic-addon1">
               </div>
             </div>

@@ -26,11 +26,11 @@
                 </div>
                 <div>
                   <div class="input-group" style="float:left;margin-right: 40px;width: 40%">
-                    <span class="input-group-addon">XXX</span>
+                    <span class="input-group-addon">名称</span>
                     <input type="text" class="form-control" placeholder="请输入产品名称" aria-describedby="basic-addon1" v-model="lines.name">
                   </div>
                   <div class="input-group" style="float:left;margin-right: 40px;width: 40%">
-                    <span class="input-group-addon">XXX</span>
+                    <span class="input-group-addon">价格</span>
                     <input type="text" class="form-control" placeholder="请输入产品价格" aria-describedby="basic-addon1">
                   </div>
                 </div>
@@ -86,9 +86,9 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li @click="jingdian"><a href="#">景点</a></li>
+                    <li @click="jingdian"><a>景点</a></li>
                     <li role="separator" class="divider"></li>
-                    <li @click="jiudian"><a href="#">酒店</a></li>
+                    <li @click="jiudian"><a>酒店</a></li>
                   </ul>
                 </div>
                 <input type="text" class="form-control" v-model="key" placeholder="搜索">
@@ -138,7 +138,7 @@
                 <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>人员设置
               </div>
               <div class="input-group">
-                <span class="input-group-addon">X</span>
+                <span class="input-group-addon">工号</span>
                 <input type="text" class="form-control" placeholder="请输入核销人员工号" aria-describedby="basic-addon1">
               </div>
             </div>

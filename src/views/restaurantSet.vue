@@ -25,14 +25,14 @@
             </div>
             <div style="float:left;width: 40%;margin-right: 40px">
               <div class="input-group">
-                <span class="input-group-addon">XXX</span>
+                <span class="input-group-addon">名称</span>
                 <input type="text" class="form-control" placeholder="请输入酒店名称" aria-describedby="basic-addon1"
                        v-model="rests.name">
               </div>
             </div>
             <div style="float:left;width: 40%;margin-right: 40px">
               <div class="input-group">
-                <span class="input-group-addon">XXX</span>
+                <span class="input-group-addon">地址</span>
                 <input type="text" class="form-control" placeholder="请输入酒店地址" aria-describedby="basic-addon1"
                        v-model="rests.address">
               </div>
@@ -61,7 +61,7 @@
                 <span class="glyphicon glyphicon-th" style="padding-right: 10px"></span>管理号码
               </div>
               <div class="input-group" >
-                <span class="input-group-addon">X</span>
+                <span class="input-group-addon">号码</span>
                 <input type="text" class="form-control" placeholder="请输入酒店号码" aria-describedby="basic-addon1"
                        v-model="rests.phone">
               </div>
@@ -84,7 +84,7 @@
                 <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>人员设置
               </div>
               <div class="input-group">
-                <span class="input-group-addon">X</span>
+                <span class="input-group-addon">工号</span>
                 <input type="text" class="form-control" placeholder="请输入核销人员工号" aria-describedby="basic-addon1">
               </div>
             </div>

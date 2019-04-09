@@ -111,6 +111,7 @@ export default new VueRouter({
         },
         {
           path:'/carset',
+          name:'carset',
           component: carSet,
         },
       ]

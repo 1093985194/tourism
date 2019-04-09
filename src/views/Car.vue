@@ -18,21 +18,21 @@
           <table class="table table-hover table-striped" width='100%' border='0' cellspacing='0' cellpadding='0' style='table-layout: fixed'>
             <thead>
             <tr>
-              <th align="left" style="width: 200px">车牌号</th>
-              <th align="left" style="width: 100px">客户名</th>
-              <th align="left" style="width: 100px">手机号</th>
-              <th align="left" style="width: 100px">借车时限</th>
+              <th align="left" style="width: 100px">车辆ID</th>
+              <th align="left" style="width: 100px">地址</th>
+              <th align="left" style="width: 100px">店家</th>
+              <th align="left" style="width: 100px">评价</th>
               <th align="left" style="width: 100px">操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(item,index) in search(keywords).slice(x,y)">
-              <td>{{item.ticketplace}}</td>
-              <td>{{item.ticketdate | dateFormat(item.ticketdate)}}</td>
-              <td v-for="list in item.ticketstyle">{{list.id}}</td>
-              <td>{{item.ticketprice}}</td>
+            <tr v-for="(item,index) in car">
+              <td>{{item.id}}</td>
+              <td>{{item.address}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.score}}</td>
               <td>
-                <a v-on:click="getIndex(index)"><router-link to="carSet">修改</router-link></a>/<a href="#" v-on:click="deleteInfo(index)">删除</a>
+               <router-link to="carSet"><a v-on:click="getIndex(car[index])">修改</a></router-link>/<a href="#" v-on:click="deleteInfo(index)">删除</a>
               </td>
             </tr>
             </tbody>
@@ -54,19 +54,7 @@
   export default {
     data(){
       return{
-        list:[
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'eee',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:[{id:'1'}],ticketprice:123,ticketleave:123},
-        ],
+        car:null,
         keywords:'',
         page:'1',
         num:'0',
@@ -75,37 +63,66 @@
         dataIndex:'',
       }
     },
+    mounted () {
+      this.$axios.get(this.GLOBAL.BASE_URL+'/api/carShop')
+        .then(response => {
+          this.car = response.data;
+        })
+      console.log(this.GLOBAL.BASE_URL+'/api/carShop')
+    },
     methods:{
       deleteInfo(index){
-        this.list.splice(index,1)
+        this.$axios.delete(this.GLOBAL.BASE_URL+'/api/carShop/'+this.car[index].id)
+        this.car.splice(index,1);
       },
       shang(){
-        if (this.page!=1){
-          this.page--;
-          this.x=(this.page-1)*10;
-          this.y=this.page*10;
-        }
-      },
-      xia(){
-        if (this.page*10<this.num) {
-          this.page++;;
-          this.x=(this.page-1)*10;
-          this.y=this.page*10;}
-      },
-      getIndex(index){
-        this.dataIndex=index;
-      },
-      search(keywords) {
-        this.num='0'
-        return this.list.filter(item => {
-          if (item.ticketplace.includes(keywords)) {
-            if (item.ticketplace!=null) {
-              this.num++
-            }
-            return item
+        this.page--;
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/carShop',{
+          params:{
+            page: this.page
           }
         })
-      }
+          .then(response => {
+            if (!(Array.isArray(response.data))||response.data==null||response.data.length===0){
+              this.page++;
+              return;
+            }
+            this.car = response.data;
+          })
+      },
+      xia(){
+        this.page++;
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/carShop',{
+          params:{
+            page: this.page
+          }
+        })
+          .then(response => {
+            if (!(Array.isArray(response.data))||response.data==null||response.data.length===0){
+              this.page--;
+              return;
+            }
+            this.car = response.data;
+          })
+
+      },
+      getIndex(car){
+        this.$router.push({
+          name:'carset',
+          params:{
+            car : car
+          }
+        })
+      },
+      search() {
+        console.log(this.keywords)
+        this.$axios.get(this.GLOBAL.BASE_URL+'/api/carShop', {
+          params:{
+            address: this.keywords,
+            page: this.page
+          }
+        }).then(response => this.car = response.data)
+      },
     },
     filters:{
       dateFormat:function(time) {
@@ -120,11 +137,19 @@
         return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
       }
     },
+    watch:{
+      keywords(key){
+        this.search()
+      }
+    }
   }
 </script>
 
 <style>
   .list{
     width: fit-content;
+  }
+  .table{
+    margin-bottom: 0px;
   }
 </style>

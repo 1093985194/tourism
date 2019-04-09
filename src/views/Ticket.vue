@@ -27,7 +27,6 @@
             </tr>
             </thead>
             <tbody>
-            <!--<tr v-for="(item,index) in search(keywords).slice(x,y)">-->
             <tr v-for="(item,index) in scenic">
               <td>{{item.name}}</td>
               <td>{{item.startTime }}</td>
