@@ -66,7 +66,7 @@
                 </tr>
                 <div v-for="(v,i) in tickets" style="float: left;margin-bottom: 5px">
                   <form class="form-inline">
-                    <input class="form-control" v-model="tickets[i].name" placeholder="请输入套房名称">
+                    <input class="form-control" v-model="tickets[i].name" placeholder="请输入景点名称">
                     <input class="form-control" v-model="tickets[i].price" placeholder="请输入价格">
                     <button class="btn btn-default" @click="del(i)">删除</button>
                     <br>
@@ -135,26 +135,7 @@
             <div style="float:left;margin-right: 40px">
               <div style="margin-bottom: 10px">
                 <span class="glyphicon glyphicon-bullhorn" style="padding-right: 10px"></span>票种设置
-                <button class="btn btn-default" style="margin-left: 20px" v-on:click="AddList">添加新票种</button>
               </div>
-              <!--<div style="padding: 5px">-->
-                <!--<table width='100%' style='table-layout: fixed'>-->
-                  <!--<thead style="padding-bottom: 20px">-->
-                  <!--<tr v-if="tickets.length!=0">-->
-                    <!--<td style="padding: 5px">名称</td>-->
-                    <!--<td style="padding-left: 10px">价格</td>-->
-                    <!--<td style="padding-left: 20px">操作</td>-->
-                  <!--</tr>-->
-                  <!--</thead>-->
-                  <!--<tbody>-->
-                  <!--<tr class="form-inline" v-for="(item,i) in tickets" style="float: left;margin-bottom: 5px">-->
-                    <!--<td><input class="form-control" v-model="tickets[i].name" placeholder="请输入名称"></td>-->
-                    <!--<td><input class="form-control" v-model="item.times[item.timeIndex].price" placeholder="请输入价格"></td>-->
-                    <!--<td><button class="btn btn-default" @click="del(i)">删除</button></td>-->
-                  <!--</tr>-->
-                  <!--</tbody>-->
-                <!--</table>-->
-              <!--</div>-->
               <div style="padding: 5px">
                 <tr>
                   <td style="padding: 5px">名称</td>
@@ -280,34 +261,27 @@
           ]
         },
         ticketTime:"",
-        // ticketTimeIndex: [],
       }
     },
     watch:{
       ticketTime(val) {
-        // console.log(this.tickets[0].times)
-        console.log("0000")
         for(let tindex = 0; tindex<this.tickets.length; tindex++){
           this.tickets[tindex].timeIndex = -1;
-          // console.log("1111")
           for (let index = 0; index<this.tickets[tindex].times.length; index++){
-            console.log(this.ticketTime);
-            console.log(this.tickets[tindex].times[index].useTime);
-            console.log(this.ticketTime===this.tickets[tindex].times[index].useTime)
             if (this.ticketTime===this.tickets[tindex].times[index].useTime){
               this.tickets[tindex].timeIndex=index;
               console.log(this.tickets[tindex].timeIndex)
             }
           }
+          console.log(this.ticketTime);
           if(this.tickets[tindex].timeIndex === -1){
-            // console.log("3333")
             this.tickets[tindex].times.push({
               price: this.tickets[tindex].price,
               balance:this.tickets[tindex].balance,
               useTime:this.ticketTime
             });
+            console.log(this.tickets[tindex].times);
             this.tickets[tindex].timeIndex = this.tickets[tindex].times.length -1;
-            // console.log(this.tickets[tindex].timeIndex)
           }
         }
       }

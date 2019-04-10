@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;">
+  <div style="overflow-x:hidden;height: 100%">
     <div class="panel">
       <div>
         <h4 style="float: left"><span class="glyphicon glyphicon-glass"
@@ -13,6 +13,7 @@
     </div>
 
     <div class="row" style="padding-left: 15px">
+      <div class="col-md-12">
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading" style="text-align:center; border-bottom: 0px">总订单</div>
@@ -56,7 +57,7 @@
               <br>
               <span class="text-success" style="font-size: 40px;">30</span>
             </div>
-            <div class="biao col-md-4 bor-right">
+            <div class="biao col-md-4">
               <span>一日游</span>
               <br>
               <span class="text-warning" style="font-size: 40px;">30</span>
@@ -65,72 +66,65 @@
           </div>
         </div>
       </div>
-
-      <div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
       </div>
 
-
-      <div class="col-md-3">
+      <div class="col-md-12">
+        <div class="col-md-3">
           <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <div class="panel-heading" style="text-align:center; border-bottom: 0px">消费额度</div>
-          <!-- Table -->
-          <div style="height: 80px; padding: 5px 0">
-            <div class="biao col-md-4 bor-right" >
-              <span>>1000</span>
-              <br>
-              <span class="text-primary" style="font-size: 40px;">40</span>
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="text-align:center; border-bottom: 0px">消费额度</div>
+            <!-- Table -->
+            <div style="height: 80px; padding: 5px 0">
+              <div class="biao col-md-4 bor-right" >
+                <span>>1000</span>
+                <br>
+                <span class="text-primary" style="font-size: 40px;">40</span>
+              </div>
+              <div class="biao col-md-4 bor-right">
+                <span>>500</span>
+                <br>
+                <span class="text-success" style="font-size: 40px;">50</span>
+              </div>
+              <div class="biao col-md-4">
+                <span> <500 </span>
+                <br>
+                <span class="text-warning" style="font-size: 40px;">10</span>
+              </div>
             </div>
-            <div class="biao col-md-4 bor-right">
-              <span>>500</span>
-              <br>
-              <span class="text-success" style="font-size: 40px;">50</span>
-            </div>
-            <div class="biao col-md-4">
-              <span> <500 </span>
-              <br>
-              <span class="text-warning" style="font-size: 40px;">10</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="text-align:center; border-bottom: 0px">用户满意度</div>
+            <!-- Table -->
+            <div style="height: 80px; padding: 5px 0">
+              <div class="biao col-md-3 bor-right" >
+                <span>☆☆☆☆</span>
+                <br>
+                <span class="text-primary" style="font-size: 40px;">86</span>
+              </div>
+              <div class="biao col-md-3 bor-right">
+                <span>☆☆☆</span>
+                <br>
+                <span class="text-success" style="font-size: 40px;">7</span>
+              </div>
+              <div class="biao col-md-3 bor-right">
+                <span>☆☆</span>
+                <br>
+                <span class="text-warning" style="font-size: 40px;">5</span>
+              </div>
+              <div class="biao col-md-3">
+                <span>☆</span>
+                <br>
+                <span class="text-danger" style="font-size: 40px;">2</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <div class="panel-heading" style="text-align:center; border-bottom: 0px">用户满意度</div>
-          <!-- Table -->
-          <div style="height: 80px; padding: 5px 0">
-            <div class="biao col-md-3 bor-right" >
-              <span>☆☆☆☆</span>
-              <br>
-              <span class="text-primary" style="font-size: 40px;">86</span>
-            </div>
-            <div class="biao col-md-3 bor-right">
-              <span>☆☆☆</span>
-              <br>
-              <span class="text-success" style="font-size: 40px;">7</span>
-            </div>
-            <div class="biao col-md-3 bor-right">
-              <span>☆☆</span>
-              <br>
-              <span class="text-warning" style="font-size: 40px;">5</span>
-            </div>
-            <div class="biao col-md-3">
-              <span>☆</span>
-              <br>
-              <span class="text-danger" style="font-size: 40px;">2</span>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
     </div>
 
 
@@ -218,6 +212,7 @@
         y:'10',
         dataIndex:'',
         types:'种类',
+        type:'',
         dealType:''
       }
     },

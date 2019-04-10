@@ -2,7 +2,7 @@
   <div class="container-fluid home">
     <div class="col-md-12" style="background-color: white;margin-bottom: 20px">
       <!--<h4 style="padding-bottom: 30px">一周订单统计</h4>-->
-      <div id="myChart" :style="{width: '1100px', height: '400px',paddingTop:'50px',paddingLeft: '50px'}"></div>
+      <div id="myChart" :style="{width: '1100px', height: '400px',paddingTop:'50px',paddingLeft: '10%'}"></div>
     </div>
     <div class="col-md-12" style="padding: 0px">
       <div class="col-md-3">

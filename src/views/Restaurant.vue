@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div style="height: 100%">
       <div class="panel">
         <div>
@@ -51,8 +50,6 @@
         </nav>
       </div>
     </div>
-    <!--{{info}}-->
-  </div>
 </template>
 
 <script>

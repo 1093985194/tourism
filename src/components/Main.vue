@@ -19,10 +19,6 @@
               <span class="glyphicon glyphicon-user"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <!--<li><a href="#">Action</a></li>-->
-              <!--<li><a href="#">Another action</a></li>-->
-              <!--<li><a href="#">Something else here</a></li>-->
-              <!--<li role="separator" class="divider"></li>-->
               <li><router-link to="register">登出</router-link></li>
             </ul>
           </li>

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;overflow:hidden">
+  <div style="height: 100%;overflow-x:hidden;">
     <div class="panel">
       <div>
         <h4 style="float: left"><span class="glyphicon glyphicon-plane" style="padding-top: 4px;padding-right: 5px"></span>旅游团列表</h4>
@@ -62,17 +62,6 @@
         list:[
           {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'chengren',ticketprice:123,ticketleave:123},
           {id:'1',ticketplace:'eee',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'ccc',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'ddd',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
-          {id:'1',ticketplace:'bbb',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
           {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
           {id:'1',ticketplace:'aaa',ticketdate:new Date(),ticketstyle:'ertong',ticketprice:123,ticketleave:123},
         ],

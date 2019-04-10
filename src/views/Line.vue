@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div style="overflow-x:hidden;height: 100%">
     <div class="panel">
       <div>
         <h4 style="float: left"><span class="glyphicon glyphicon-calendar" style="padding-top: 4px;padding-right: 5px"></span>路线列表</h4>
